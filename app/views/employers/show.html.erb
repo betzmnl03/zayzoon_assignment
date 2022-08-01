@@ -1,0 +1,17 @@
+
+<% if @employer%> 
+    <h3>Name: <%=@employer.name%></h3>
+    <p>ID: #<%= @employer.id %></p>
+
+    <h3>Import Employee Earnings</h3>
+
+    <%= form_tag employee_earnings_employer_path, multipart: true do %>
+        <%= file_field_tag :file%>
+        <%= submit_tag "Upload Earnings" %>
+    <% end %>
+<%else%>
+    <div class="card mt-4">
+        <p>Employer Record doesnt exists</p>
+    </div>
+<%end%>
+
