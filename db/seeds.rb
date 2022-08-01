@@ -41,54 +41,16 @@ employers = [
     }
 ]
 
-# employer1
-
 employers.each do |employer|
     new_employer = Employer.create({
        name:employer[:name],
        formats:employer[:formats]
     })
-    puts employer
     employer[:employees].each do |employee|
-        puts employee
         new_employee = Employee.create({
          **employee,
             employer_id: new_employer.id
         })
-        puts "saved", new_employee
     end
 
 end
-# employer1 = Employer.create(
-#     name:"Acme"
-# )
-
-# employer2 = Employer.create(
-#     name: "Beta",
-
-# )
-
-# employee_acme1 = Employee.create(
-#     name: "Betsy",
-#     external_ref: "A123",
-#     employer_id: employer1.id
-# )
-
-
-# employee_acme2 = Employee.create(
-#     name: "Rose",
-#     external_ref: "B456",
-#     employer_id: employer1.id
-# )
-
-# employee_beta = Employee.create(
-#     name: "Florence",
-#     external_ref: "123",
-#     employer_id: employer2.id
-# )
-
-# employee_acme2 = Employee.create(
-#     name: "Ruth",
-#     external_ref: "456",
-#     employer_id: employer2.id
-# )
