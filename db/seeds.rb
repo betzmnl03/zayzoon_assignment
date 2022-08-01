@@ -6,15 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Earning.delete_all
-Employee.delete_all
 Employer.delete_all
 
-
-
-employers = ["Acme","Beta"]
-
-employers = [
+@employers = [
     {
         name:"Acme",
         employees:[
@@ -41,7 +35,7 @@ employers = [
     }
 ]
 
-employers.each do |employer|
+@employers.each do |employer|
     new_employer = Employer.create({
        name:employer[:name],
        formats:employer[:formats]

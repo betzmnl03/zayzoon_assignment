@@ -1,6 +1,6 @@
 class Employer < ApplicationRecord
 
-    has_many :employees
+    has_many :employees, dependent: :destroy
 
     validates :name, presence: true
 end

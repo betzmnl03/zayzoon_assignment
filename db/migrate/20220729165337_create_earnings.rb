@@ -1,5 +1,5 @@
 class CreateEarnings < ActiveRecord::Migration[6.1]
-  def change
+  def self.up
     create_table :earnings do |t|
 
       t.date :earning_date
@@ -7,5 +7,9 @@ class CreateEarnings < ActiveRecord::Migration[6.1]
       t.references :employee, null:false, foreign_key:true
       t.timestamps
     end
+  end
+
+  def self.down
+      drop_table :earnings
   end
 end
