@@ -2,26 +2,31 @@ require 'rails_helper'
 
 
 RSpec.describe EmployersController, type: :controller do
-    describe '#employee_earnings' do
-        before do
-           employer = @employers[0]
-            let(:new_employer) {
-            Employer.create({
-                    name: employer[:name],
-                    formats:employer[:formats]
-                })
-                employer[:employees].each do |employee|
-                new_employee = Employee.create({
-                 **employee,
-                    employer_id: new_employer.id
-                })
-                
-            end
+
+        let!(:new_employer) {
+        Employer.create(
+            name: "Acme",
+            formats:{
+                    EmployeeNumber:{name:"external_ref"},
+                    CheckDate:{name:"earning_date",pattern:"%m/%d/%Y"},
+                    Amount:{name:"amount"}
+            })
         }
-        end
+        let!(:employee1) {Employee.create(
+            name:"Betsy", external_ref:"A123",
+               employer_id: new_employer.id
+        )}
+
+        let!(:employee2){ Employee.create(
+            name:"Manuel", external_ref:"B456",
+            employer_id: new_employer.id
+        )}
+    
+    describe '#employee_earnings' do
+       
         # happy-path
         it 'should successfully import csv' do
-           post :employee_earnings, params: {id:new_employer.id, file:fixture_file_upload('acme_earnings.csv','text/csv')}
+           post :employee_earnings, params: {id: new_employer.id, file:fixture_file_upload('acme_earnings.csv','text/csv')}
            expect(response).to redirect_to(employer_path(new_employer.id))
            expect(flash[:notice]).to match("Data Uploaded successfully")
         end
@@ -29,7 +34,7 @@ RSpec.describe EmployersController, type: :controller do
         # happy-path
         it 'should create earnings records' do
             before_earning = Earning.count 
-            post :employee_earnings, params: {id:new_employer.id, file:fixture_file_upload('acme_earnings.csv','text/csv')}
+            post :employee_earnings, params: {id: new_employer.id, file:fixture_file_upload('acme_earnings.csv','text/csv')}
             after_earning = Earning.count
             expect(after_earning).to eq(before_earning+2)
         end
@@ -71,4 +76,5 @@ RSpec.describe EmployersController, type: :controller do
         end
 
     end
+        
 end
