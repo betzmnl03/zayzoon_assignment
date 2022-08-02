@@ -4,7 +4,7 @@
 
 ## Assumptions
 
-- I assumed the Employer and Employee record would already exist in the db and hence can just navigate to the url employers/:id to upload the csv file.
+- I assumed the Employer and Employee records would already exist in the db and hence can just navigate to the url employers/:id to upload the csv file.
 
 - I also asssumed that the check date in all the csv is in UTC hence saving it without the offset.
 
@@ -30,6 +30,13 @@
 3. rails db:migrate
 4. rails db:seed
 5. rails s
+
+## To upload earnings csv
+
+1. To upload acme earnings.csv, navigate to [http://localhost:3000/employers/1](http://localhost:3000/employers/1)
+2. Click on Browse and upload the acme_earnings.csv file
+3. Click on "Upload Earnings" button
+4. Will display "Data upload was successful", if the file was uploaded successfuly. else will notice an error box with the failure reason.
 
 ## To test
 
