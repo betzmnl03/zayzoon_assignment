@@ -31,7 +31,7 @@ RSpec.describe EmployersController, type: :controller do
            expect(flash[:notice]).to match("Data Uploaded successfully")
         end
         
-        # happy-path
+        # happy-path - record creation
         it 'should create earnings records' do
             before_earning = Earning.count 
             post :employee_earnings, params: {id: new_employer.id, file:fixture_file_upload('acme_earnings.csv','text/csv')}
@@ -75,6 +75,18 @@ RSpec.describe EmployersController, type: :controller do
             expect(after_earning).to eq(before_earning)
         end
 
+    end
+
+
+    describe "#call" do
+        let(:file){
+            fixture_file_upload('acme_earnings.csv','text/csv')
+        }
+
+        it "invokes the service object" do
+            expect(EarningCollection).to receive(:call)
+            post :employee_earnings, params: {id: new_employer.id, file:file}
+        end
     end
         
 end
