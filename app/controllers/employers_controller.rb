@@ -7,7 +7,7 @@ class EmployersController < ApplicationController
     def employee_earnings 
         begin
             @employer = Employer.find_by_id!(params[:id])
-            EarningCollection.call(@employer,params[:file])
+            EarningCollectionService.call(@employer,params[:file])
             redirect_to employer_path(@employer), notice: "Data Uploaded successfully"
         rescue ActiveRecord::RecordNotFound, Date::Error, LoadError =>e
             handle_error(e,params[:id])

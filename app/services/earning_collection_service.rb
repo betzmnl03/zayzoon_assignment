@@ -1,5 +1,5 @@
 require "csv"
-class EarningCollection < ApplicationService
+class EarningCollectionService < ApplicationService
 
     def initialize(employer, file)
         @employer = employer
@@ -9,7 +9,6 @@ class EarningCollection < ApplicationService
     def call
       ActiveRecord::Base.transaction do  
       extracted_data = extract_data()
-      earnings_arr = []
       extracted_data.each do |earning|
         new_earning = Earning.new()
           @employer.formats.each do |format, value|
